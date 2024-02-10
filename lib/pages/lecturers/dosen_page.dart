@@ -18,7 +18,7 @@ class _DosenPageState extends State<DosenPage> {
   final List<Widget> _pages = [
     const DashboardDosenPage(),
     const Center(child: Text('New Page')),
-    const ProfilePage(role: 'Dosen'),
+    const ProfilePage(roles: 'Dosen'),
   ];
 
   @override

@@ -19,7 +19,7 @@ class _MahasiswaPageState extends State<MahasiswaPage> {
   final List<Widget> _pages = [
     const DashboardPage(),
     const SchedulesPage(),
-    const ProfilePage(role: 'Mahasiswa')
+    const ProfilePage(roles: 'siswa')
   ];
 
   void _onItemTapped(int index) {

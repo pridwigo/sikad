@@ -7,10 +7,10 @@ import '../../common/constants/colors.dart';
 import '../../common/constants/icons.dart';
 
 class ProfilePage extends StatefulWidget {
-  final String role;
+  final String roles;
   const ProfilePage({
     Key? key,
-    required this.role,
+    required this.roles,
   }) : super(key: key);
 
   @override
@@ -70,7 +70,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             border: Border.all(color: ColorName.primary),
                           ),
                           child: Text(
-                            widget.role,
+                            widget.roles,
                             style: const TextStyle(
                               color: ColorName.primary,
                               fontSize: 8,

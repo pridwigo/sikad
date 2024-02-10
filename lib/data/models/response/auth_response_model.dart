@@ -1,57 +1,59 @@
 import 'dart:convert';
 
 class AuthResponseModel {
-    final String jwtToken;
-    final User user;
+  final String jwtToken;
+  final User user;
 
-    AuthResponseModel({
-        required this.jwtToken,
-        required this.user,
-    });
+  AuthResponseModel({
+    required this.jwtToken,
+    required this.user,
+  });
 
-    factory AuthResponseModel.fromJson(String str) => AuthResponseModel.fromMap(json.decode(str));
+  factory AuthResponseModel.fromJson(String str) =>
+      AuthResponseModel.fromMap(json.decode(str));
 
-    String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-    factory AuthResponseModel.fromMap(Map<String, dynamic> json) => AuthResponseModel(
+  factory AuthResponseModel.fromMap(Map<String, dynamic> json) =>
+      AuthResponseModel(
         jwtToken: json["jwt-token"],
         user: User.fromMap(json["user"]),
-    );
+      );
 
-    Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() => {
         "jwt-token": jwtToken,
         "user": user.toMap(),
-    };
+      };
 }
 
 class User {
-    final String id;
-    final String name;
-    final String email;
-    final String roles;
+  final String id;
+  final String name;
+  final String email;
+  final String roles;
 
-    User({
-        required this.id,
-        required this.name,
-        required this.email,
-        required this.roles,
-    });
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    required this.roles,
+  });
 
-    factory User.fromJson(String str) => User.fromMap(json.decode(str));
+  factory User.fromJson(String str) => User.fromMap(json.decode(str));
 
-    String toJson() => json.encode(toMap());
+  String toJson() => json.encode(toMap());
 
-    factory User.fromMap(Map<String, dynamic> json) => User(
+  factory User.fromMap(Map<String, dynamic> json) => User(
         id: json["id"],
         name: json["name"],
         email: json["email"],
         roles: json["roles"],
-    );
+      );
 
-    Map<String, dynamic> toMap() => {
+  Map<String, dynamic> toMap() => {
         "id": id,
         "name": name,
         "email": email,
         "roles": roles,
-    };
+      };
 }

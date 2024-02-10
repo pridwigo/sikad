@@ -30,7 +30,7 @@ class _AuthPageState extends State<AuthPage> {
             ),
             const SizedBox(height: 8.0),
             const Text(
-              "SIAKAD CWB",
+              "SIKAD",
               style: TextStyle(
                 fontSize: 34,
                 fontWeight: FontWeight.w800,

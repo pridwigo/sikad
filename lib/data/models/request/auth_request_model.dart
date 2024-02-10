@@ -8,7 +8,7 @@ class AuthRequestModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'emai': email,
+      'email': email,
       'password': password,
     };
   }
