@@ -5,10 +5,8 @@ import '../../../common/components/custom_text_field.dart';
 import '../../../common/constants/colors.dart';
 
 class LoginBottomSheet extends StatefulWidget {
-  final VoidCallback onPressed;
   const LoginBottomSheet({
     super.key,
-    required this.onPressed,
   });
 
   @override
@@ -29,7 +27,11 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(16.0),
+      padding: EdgeInsets.only(
+          top: 20,
+          right: 20,
+          left: 20,
+          bottom: MediaQuery.of(context).viewInsets.bottom),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -83,10 +85,7 @@ class _LoginBottomSheetState extends State<LoginBottomSheet> {
                 obscureText: true,
               ),
               const SizedBox(height: 24.0),
-              Button.filled(
-                onPressed: widget.onPressed,
-                label: 'Masuk',
-              ),
+              Button.filled(onPressed: () {}, label: 'Masuk'),
               const SizedBox(height: 12.0),
             ],
           ),
