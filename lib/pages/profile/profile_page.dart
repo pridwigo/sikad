@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dash/flutter_dash.dart';
+import 'package:sikad/bloc/logout/logout_bloc.dart';
+import 'package:sikad/data/datasources/auth_local_datasource.dart';
+import 'package:sikad/pages/auth/auth_page.dart';
 
 import '../../common/components/custom_scaffold.dart';
 import '../../common/components/row_text.dart';
@@ -44,57 +48,114 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               children: [
                 const SizedBox(height: 22.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ClipRRect(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(50.0)),
-                      child: Image.network(
-                        'https://avatars.githubusercontent.com/u/534678?v=4',
-                        width: 72.0,
-                        height: 72.0,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 11.0, vertical: 2.0),
-                          decoration: BoxDecoration(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ClipRRect(
                             borderRadius:
-                                const BorderRadius.all(Radius.circular(16.0)),
-                            border: Border.all(color: ColorName.primary),
-                          ),
-                          child: Text(
-                            widget.roles,
-                            style: const TextStyle(
-                              color: ColorName.primary,
-                              fontSize: 8,
-                              fontWeight: FontWeight.w500,
+                                const BorderRadius.all(Radius.circular(50.0)),
+                            child: Image.network(
+                              'https://avatars.githubusercontent.com/u/534678?v=4',
+                              width: 72.0,
+                              height: 72.0,
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ),
-                        const Text(
-                          "Saiful Bahri",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: ColorName.primary,
+                          const SizedBox(width: 10.0),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 11.0, vertical: 2.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(16.0)),
+                                  border: Border.all(color: ColorName.primary),
+                                ),
+                                child: Text(
+                                  widget.roles,
+                                  style: const TextStyle(
+                                    color: ColorName.primary,
+                                    fontSize: 8,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                              const Text(
+                                "Saiful Bahri",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  color: ColorName.primary,
+                                ),
+                              ),
+                              const Text(
+                                "Senin, 28 Agustus 2023",
+                                style: TextStyle(
+                                  fontSize: 8,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        const Text(
-                          "Senin, 28 Agustus 2023",
-                          style: TextStyle(
-                            fontSize: 8,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                      // logout
+                      Row(
+                        children: [
+                          BlocProvider(
+                            create: (context) => LogoutBloc(),
+                            child: BlocConsumer<LogoutBloc, LogoutState>(
+                              listener: (context, state) {
+                                state.maybeWhen(
+                                  orElse: () {},
+                                  loaded: () {
+                                    AuthLocalDatasource().removeAuthData();
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const AuthPage();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                  error: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('logout error'),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              builder: (context, state) {
+                                return state.maybeWhen(orElse: () {
+                                  return IconButton(
+                                    onPressed: () {
+                                      context
+                                          .read<LogoutBloc>()
+                                          .add(const LogoutEvent.logout());
+                                    },
+                                    icon: const Icon(Icons.logout),
+                                  );
+                                }, loading: () {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                });
+                              },
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 5.0),
                 Dash(
